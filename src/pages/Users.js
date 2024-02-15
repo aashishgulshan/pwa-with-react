@@ -31,7 +31,6 @@ function Users() {
   return (
     <>
       <h1 className="text-center">User Page</h1>
-      <button onClick={fetchData}>Load Data</button>
       <Table striped bordered hover variant="light">
         <thead>
           <tr>
@@ -43,20 +42,22 @@ function Users() {
         </thead>
         <tbody>
           {data.map((item, id) => (
-            <tr key={id} onClick={() => handleRowClick(item)}>
+            <tr className="tablePointer" key={id} onClick={() => handleRowClick(item)}>
               <td>{item.id}</td>
               <td>{item.name}</td>
               <td>{item.username}</td>
               <td>{item.email}</td>
-              
             </tr>
           ))}
         </tbody>
       </Table>
+      <button onClick={fetchData}>Load Data</button>
 
       <Modal show={showModal} onHide={closeModal}>
         <Modal.Header closeButton>
-          <Modal.Title>Hola, {selectedUser && (<>{selectedUser.name }</>)}</Modal.Title>
+          <Modal.Title>
+            Hello, {selectedUser && <>{selectedUser.name.split(" ")[0]}</>}
+          </Modal.Title>
         </Modal.Header>
         <Modal.Body>
           {selectedUser && (
@@ -65,11 +66,22 @@ function Users() {
               <p>Name: {selectedUser.name}</p>
               <p>Username: {selectedUser.username}</p>
               <p>Email: {selectedUser.email}</p>
-              <p>Address: {selectedUser.address.street +", "+ selectedUser.address.city + ", " + selectedUser.address.zipcode}</p>
+              <p>
+                Address:{" "}
+                {selectedUser.address.street +
+                  ", " +
+                  selectedUser.address.city +
+                  ", " +
+                  selectedUser.address.zipcode}
+              </p>
               <p>Phone Number: {selectedUser.phone}</p>
-              <p>Website: {selectedUser.website}</p>
+              <p>
+                Website:{" "}
+                <a href={selectedUser.website} target="_blank">
+                  {selectedUser.website}
+                </a>
+              </p>
               <p>Company: {selectedUser.company.name}</p>
-
             </>
           )}
         </Modal.Body>
